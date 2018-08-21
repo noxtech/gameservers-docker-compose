@@ -63,6 +63,28 @@ services:
         ipv4_address: "192.168.1.153"
     restart: unless-stopped
 
+  tf2:
+    image: tf2:latest
+    container_name: gameserver-tf2
+    environment:
+      - MAP="cp_manor_event"
+      - SV_HOSTNAME="NoxLAN - Team Fortress 2"
+      - LAN=1
+    networks:
+      enp1s0f0_vlan:
+        ipv4_address: "192.168.1.154"
+    restart: unless-stopped
+
+  trackmania-forever:
+    image: trackmania-forever:latest
+    container_name: gameserver-trackmania
+    environment:
+      - SERVER_NAME="NoxLAN - TrackMania Nations"
+    networks:
+      enp1s0f0_vlan:
+        ipv4_address: "192.168.1.155"
+    restart: unless-stopped
+
 networks:
   enp1s0f0_vlan:
     external: true
