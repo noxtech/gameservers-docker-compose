@@ -53,6 +53,16 @@ services:
     tty: true
     restart: unless-stopped
 
+  openttd:
+    image: openttd:latest
+    container_name: gameserver-openttd
+    environment:
+      - SV_HOSTNAME="NoxLAN - OpenTTD"
+    networks:
+      enp1s0f0_vlan:
+        ipv4_address: "192.168.1.153"
+    restart: unless-stopped
+
 networks:
   enp1s0f0_vlan:
     external: true
