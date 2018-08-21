@@ -1,0 +1,58 @@
+version: '2'
+
+services:
+
+  l4d2-campaign:
+    image: l4d2:latest
+    container_name: gameserver-l4d2-campaign
+    environment:
+      - MAP="c2m1_highway"
+      - GAME_MODE="coop"
+      - MAX_PLAYERS="4"
+      - SV_HOSTNAME="NoxLAN - Left 4 Dead 2 - Campaign"
+      - LAN="1"
+    networks:
+      enp1s0f0_vlan:
+        ipv4_address: "192.168.1.150"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  l4d2-versus:
+    image: l4d2:latest
+    container_name: gameserver-l4d2-versus
+    environment:
+      - MAP="c2m1_highway"
+      - GAME_MODE="versus"
+      - MAX_PLAYERS="8"
+      - SV_HOSTNAME="NoxLAN - Left 4 Dead 2 - Versus"
+      - LAN="1"
+    networks:
+      enp1s0f0_vlan:
+        ipv4_address: "192.168.1.151"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  css:
+    image: css-metamod:latest
+    container_name: gameserver-css
+    environment:
+      - BOT_QUOTA=12
+      - MP_FRIENDLYFIRE=1
+      - MP_MAXROUNDS=7
+      - MP_AUTOTEAMBALANCE=1
+      - MAP="de_dust"
+      - MAX_PLAYERS=24
+      - SV_HOSTNAME="NoxLAN - Counterstrike Source"
+      - LAN=1
+    networks:
+      enp1s0f0_vlan:
+        ipv4_address: "192.168.1.152"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+networks:
+  enp1s0f0_vlan:
+    external: true
