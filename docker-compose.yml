@@ -3,14 +3,14 @@ version: '2'
 services:
 
   l4d2-campaign:
-    image: l4d2:latest
+    image: l4d2-metamod:latest
     container_name: gameserver-l4d2-campaign
     environment:
       - MAP="c2m1_highway"
-      - GAME_MODE="coop"
-      - MAX_PLAYERS="4"
+      - MP_GAMEMODE="coop"
+      - MAX_PLAYERS=4
       - SV_HOSTNAME="NoxLAN - Left 4 Dead 2 - Campaign"
-      - LAN="1"
+      - LAN=1
     networks:
       enp1s0f0_vlan:
         ipv4_address: "192.168.1.150"
@@ -19,14 +19,14 @@ services:
     restart: unless-stopped
 
   l4d2-versus:
-    image: l4d2:latest
+    image: l4d2-metamod:latest
     container_name: gameserver-l4d2-versus
     environment:
       - MAP="c2m1_highway"
-      - GAME_MODE="versus"
-      - MAX_PLAYERS="8"
+      - MP_GAMEMODE="versus"
+      - MAX_PLAYERS=8
       - SV_HOSTNAME="NoxLAN - Left 4 Dead 2 - Versus"
-      - LAN="1"
+      - LAN=1
     networks:
       enp1s0f0_vlan:
         ipv4_address: "192.168.1.151"
@@ -53,14 +53,60 @@ services:
     tty: true
     restart: unless-stopped
 
-  openttd:
-    image: openttd:latest
-    container_name: gameserver-openttd
+  csgo:
+    image: csgo:latest
+    container_name: gameserver-csgo
     environment:
-      - SV_HOSTNAME="NoxLAN - OpenTTD"
+      - MAP="de_austria"
+      - MAX_PLAYERS=24
+      - SV_HOSTNAME="NoxLAN - Counterstrike Global Offensive"
+      - LAN=1
     networks:
       enp1s0f0_vlan:
         ipv4_address: "192.168.1.153"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  csgo-gg:
+    image: csgo-gg:latest
+    container_name: gameserver-csgo-gg
+    environment:
+      - MAP="cs_office"
+      - MAX_PLAYERS=24
+      - SV_HOSTNAME="NoxLAN - Counterstrike Global Offensive - Gun Game"
+      - LAN=1
+    networks:
+      enp1s0f0_vlan:
+        ipv4_address: "192.168.1.154"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  insurgency-pvp:
+    image: insurgency:latest
+    container_name: gameserver-insurgency-pvp
+    environment:
+      - SV_HOSTNAME="NoxLAN - Insurgency - PvP"
+      - MAPCYCLEFILE=mapcycle_tactical_operations.txt
+      - SERVER_CFG=default_server_battle.cfg
+#      - GAME_MODE=ambush
+    networks:
+      enp1s0f0_vlan:
+        ipv4_address: "192.168.1.155"
+    restart: unless-stopped
+
+  insurgency-coop:
+    image: insurgency:latest
+    container_name: gameserver-insurgency-coop
+    environment:
+      - SV_HOSTNAME="NoxLAN - Insurgency - Coop"
+#      - MAPCYCLEFILE="mapcycle_tactical_operations.txt"
+#      - SERVER_CFG="default_server_survival.cfg"
+      - GAME_MODE=survival
+    networks:
+      enp1s0f0_vlan:
+        ipv4_address: "192.168.1.156"
     restart: unless-stopped
 
   tf2:
@@ -72,7 +118,17 @@ services:
       - LAN=1
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.154"
+        ipv4_address: "192.168.1.158"
+    restart: unless-stopped
+
+  openttd:
+    image: openttd:latest
+    container_name: gameserver-openttd
+    environment:
+      - SV_HOSTNAME="NoxLAN - OpenTTD"
+    networks:
+      enp1s0f0_vlan:
+        ipv4_address: "192.168.1.160"
     restart: unless-stopped
 
   trackmania-forever:
@@ -82,7 +138,7 @@ services:
       - SERVER_NAME="NoxLAN - TrackMania Nations"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.155"
+        ipv4_address: "192.168.1.161"
     restart: unless-stopped
 
 networks:
