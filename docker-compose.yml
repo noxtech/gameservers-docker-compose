@@ -53,13 +53,13 @@ services:
     tty: true
     restart: unless-stopped
 
-  csgo:
-    image: csgo:latest
-    container_name: gameserver-csgo
+  css-hideandseek:
+    image: css-hideandseek:latest
+    container_name: gameserver-css-hideandseek
     environment:
-      - MAP="de_austria"
+      - MAP="cs_office"
       - MAX_PLAYERS=24
-      - SV_HOSTNAME="NoxLAN - Counterstrike Global Offensive"
+      - SV_HOSTNAME="NoxLAN - Counterstrike Source - (Hide and Seek)"
       - LAN=1
     networks:
       enp1s0f0_vlan:
@@ -68,13 +68,13 @@ services:
     tty: true
     restart: unless-stopped
 
-  csgo-gg:
-    image: csgo-gg:latest
-    container_name: gameserver-csgo-gg
+  css-gungame:
+    image: css-gungame:latest
+    container_name: gameserver-css-gungame
     environment:
-      - MAP="cs_office"
+      - MAP="de_dust2"
       - MAX_PLAYERS=24
-      - SV_HOSTNAME="NoxLAN - Counterstrike Global Offensive - Gun Game"
+      - SV_HOSTNAME="NoxLAN - Counterstrike Source - (GunGame)"
       - LAN=1
     networks:
       enp1s0f0_vlan:
@@ -82,6 +82,36 @@ services:
     stdin_open: true
     tty: true
     restart: unless-stopped
+
+#  csgo:
+#    image: csgo:latest
+#    container_name: gameserver-csgo
+#    environment:
+#      - MAP="de_austria"
+#      - MAX_PLAYERS=24
+#      - SV_HOSTNAME="NoxLAN - Counterstrike Global Offensive"
+#      - LAN=1
+#    networks:
+#      enp1s0f0_vlan:
+#        ipv4_address: "192.168.1.154"
+#    stdin_open: true
+#    tty: true
+#    restart: unless-stopped
+
+#  csgo-gg:
+#    image: csgo-gg:latest
+#    container_name: gameserver-csgo-gg
+#    environment:
+#      - MAP="cs_office"
+#      - MAX_PLAYERS=24
+#      - SV_HOSTNAME="NoxLAN - Counterstrike Global Offensive - Gun Game"
+#      - LAN=1
+#    networks:
+#      enp1s0f0_vlan:
+#        ipv4_address: "192.168.1.155"
+#    stdin_open: true
+#    tty: true
+#    restart: unless-stopped
 
   insurgency-pvp:
     image: insurgency:latest
@@ -93,7 +123,7 @@ services:
 #      - GAME_MODE=ambush
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.155"
+        ipv4_address: "192.168.1.157"
     restart: unless-stopped
 
   insurgency-coop:
@@ -106,7 +136,7 @@ services:
       - GAME_MODE=survival
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.156"
+        ipv4_address: "192.168.1.158"
     restart: unless-stopped
 
   tf2:
@@ -118,7 +148,7 @@ services:
       - LAN=1
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.158"
+        ipv4_address: "192.168.1.159"
     restart: unless-stopped
 
   openttd:
