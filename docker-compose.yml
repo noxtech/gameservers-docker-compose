@@ -11,6 +11,8 @@ services:
       - MAX_PLAYERS=4
       - SV_HOSTNAME="NoxLAN - Left 4 Dead 2 - Campaign"
       - LAN=1
+      - RCON_PASSWORD="changeme"
+      - FULL_ADMINS="STEAM_1:0:7970889" "99:z"
     networks:
       enp1s0f0_vlan:
         ipv4_address: "192.168.1.150"
@@ -27,9 +29,47 @@ services:
       - MAX_PLAYERS=8
       - SV_HOSTNAME="NoxLAN - Left 4 Dead 2 - Versus"
       - LAN=1
+      - RCON_PASSWORD="changeme"
+      - FULL_ADMINS="STEAM_1:0:7970889" "99:z"
     networks:
       enp1s0f0_vlan:
         ipv4_address: "192.168.1.151"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  l4d2-versus-abm:
+    image: l4d2-abm:latest
+    container_name: gameserver-l4d2-versus-abm
+    environment:
+      - MAP="c2m1_highway"
+      - MP_GAMEMODE="versus"
+      - MAX_PLAYERS=16
+      - SV_HOSTNAME="NoxLAN - Left 4 Dead 2 - Versus (8v8)"
+      - LAN=1
+      - RCON_PASSWORD="changeme"
+      - FULL_ADMINS="STEAM_1:0:7970889" "99:z"
+    networks:
+      enp1s0f0_vlan:
+        ipv4_address: "192.168.1.152"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  l4d2-campaign-abm:
+    image: l4d2-abm:latest
+    container_name: gameserver-l4d2-campaign-abm
+    environment:
+      - MAP="c2m1_highway"
+      - MP_GAMEMODE="coop"
+      - MAX_PLAYERS=8
+      - SV_HOSTNAME="NoxLAN - Left 4 Dead 2 - Campaign (8 players)"
+      - LAN=1
+      - RCON_PASSWORD="changeme"
+      - FULL_ADMINS="STEAM_1:0:7970889" "99:z"
+    networks:
+      enp1s0f0_vlan:
+        ipv4_address: "192.168.1.153"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -46,9 +86,10 @@ services:
       - MAX_PLAYERS=24
       - SV_HOSTNAME="NoxLAN - Counterstrike Source"
       - LAN=1
+      - RCON_PASSWORD="changeme"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.152"
+        ipv4_address: "192.168.1.154"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -61,9 +102,10 @@ services:
       - MAX_PLAYERS=24
       - SV_HOSTNAME="NoxLAN - Counterstrike Source - (Hide and Seek)"
       - LAN=1
+      - RCON_PASSWORD="changeme"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.153"
+        ipv4_address: "192.168.1.155"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -76,9 +118,10 @@ services:
       - MAX_PLAYERS=24
       - SV_HOSTNAME="NoxLAN - Counterstrike Source - (GunGame)"
       - LAN=1
+      - RCON_PASSWORD="changeme"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.154"
+        ipv4_address: "192.168.1.156"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -117,10 +160,11 @@ services:
     image: insurgency:latest
     container_name: gameserver-insurgency-pvp
     environment:
-      - SV_HOSTNAME="NoxLAN - Insurgency - PvP"
+      - SV_HOSTNAME="NoxLAN - Insurgency - Conquest"
       - MAPCYCLEFILE=mapcycle_tactical_operations.txt
       - SERVER_CFG=default_server_battle.cfg
-#      - GAME_MODE=ambush
+#      - GAME_MODE=conquest
+      - RCON_PASSWORD="changeme"
     networks:
       enp1s0f0_vlan:
         ipv4_address: "192.168.1.157"
@@ -134,6 +178,7 @@ services:
 #      - MAPCYCLEFILE="mapcycle_tactical_operations.txt"
 #      - SERVER_CFG="default_server_survival.cfg"
       - GAME_MODE=survival
+      - RCON_PASSWORD="changeme"
     networks:
       enp1s0f0_vlan:
         ipv4_address: "192.168.1.158"
@@ -146,6 +191,7 @@ services:
       - MAP="cp_manor_event"
       - SV_HOSTNAME="NoxLAN - Team Fortress 2"
       - LAN=1
+      - RCON_PASSWORD="changeme"
     networks:
       enp1s0f0_vlan:
         ipv4_address: "192.168.1.159"
@@ -155,7 +201,7 @@ services:
     image: openttd:latest
     container_name: gameserver-openttd
     environment:
-      - SV_HOSTNAME="NoxLAN - OpenTTD"
+      - SERVER_NAME="NoxLAN - OpenTTD"
     networks:
       enp1s0f0_vlan:
         ipv4_address: "192.168.1.160"
@@ -165,7 +211,7 @@ services:
     image: trackmania-forever:latest
     container_name: gameserver-trackmania
     environment:
-      - SERVER_NAME="NoxLAN - TrackMania Nations"
+      - SERVER_NAME=NoxLAN - TrackMania Nations
     networks:
       enp1s0f0_vlan:
         ipv4_address: "192.168.1.161"
@@ -173,4 +219,6 @@ services:
 
 networks:
   enp1s0f0_vlan:
-    external: true
+    external:
+      name: enp1s0f0_vlan
+
