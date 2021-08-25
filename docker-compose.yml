@@ -15,7 +15,7 @@ services:
       - FULL_ADMINS="STEAM_1:0:7970889" "99:z"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.150"
+        ipv4_address: "192.168.0.150"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -33,7 +33,7 @@ services:
       - FULL_ADMINS="STEAM_1:0:7970889" "99:z"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.151"
+        ipv4_address: "192.168.0.151"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -51,7 +51,7 @@ services:
       - FULL_ADMINS="STEAM_1:0:7970889" "99:z"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.152"
+        ipv4_address: "192.168.0.152"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -69,7 +69,7 @@ services:
       - FULL_ADMINS="STEAM_1:0:7970889" "99:z"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.153"
+        ipv4_address: "192.168.0.153"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -89,7 +89,7 @@ services:
       - RCON_PASSWORD="changeme"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.154"
+        ipv4_address: "192.168.0.154"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -105,7 +105,7 @@ services:
       - RCON_PASSWORD="changeme"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.155"
+        ipv4_address: "192.168.0.155"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -121,40 +121,40 @@ services:
       - RCON_PASSWORD="changeme"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.156"
+        ipv4_address: "192.168.0.156"
     stdin_open: true
     tty: true
     restart: unless-stopped
 
-#  csgo:
-#    image: csgo:latest
-#    container_name: gameserver-csgo
-#    environment:
-#      - MAP="de_austria"
-#      - MAX_PLAYERS=24
-#      - SV_HOSTNAME="NoxLAN - Counterstrike Global Offensive"
-#      - LAN=1
-#    networks:
-#      enp1s0f0_vlan:
-#        ipv4_address: "192.168.1.154"
-#    stdin_open: true
-#    tty: true
-#    restart: unless-stopped
+  csgo:
+    image: csgo-metamod:latest
+    container_name: gameserver-csgo
+    environment:
+      - MAP="cs_office"
+      - MAX_PLAYERS=24
+      - SV_HOSTNAME="NoxLAN - Counterstrike Global Offensive"
+      - LAN=1
+    networks:
+      enp1s0f0_vlan:
+        ipv4_address: "192.168.0.154"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
 
-#  csgo-gg:
-#    image: csgo-gg:latest
-#    container_name: gameserver-csgo-gg
-#    environment:
-#      - MAP="cs_office"
-#      - MAX_PLAYERS=24
-#      - SV_HOSTNAME="NoxLAN - Counterstrike Global Offensive - Gun Game"
-#      - LAN=1
-#    networks:
-#      enp1s0f0_vlan:
-#        ipv4_address: "192.168.1.155"
-#    stdin_open: true
-#    tty: true
-#    restart: unless-stopped
+  # csgo-gg:
+  #   image: csgo-gg:latest
+  #   container_name: gameserver-csgo-gg
+  #   environment:
+  #     - MAP="de_dust"
+  #     - MAX_PLAYERS=24
+  #     - SV_HOSTNAME="NoxLAN - Counterstrike Global Offensive - Gun Game"
+  #     - LAN=1
+  #   networks:
+  #     enp1s0f0_vlan:
+  #       ipv4_address: "192.168.0.155"
+  #   stdin_open: true
+  #   tty: true
+  #   restart: unless-stopped
 
   insurgency-pvp:
     image: insurgency:latest
@@ -167,7 +167,7 @@ services:
       - RCON_PASSWORD="changeme"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.157"
+        ipv4_address: "192.168.0.157"
     restart: unless-stopped
 
   insurgency-coop:
@@ -181,7 +181,7 @@ services:
       - RCON_PASSWORD="changeme"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.158"
+        ipv4_address: "192.168.0.158"
     restart: unless-stopped
 
   tf2:
@@ -194,7 +194,7 @@ services:
       - RCON_PASSWORD="changeme"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.159"
+        ipv4_address: "192.168.0.159"
     restart: unless-stopped
 
   openttd:
@@ -204,7 +204,7 @@ services:
       - SERVER_NAME="NoxLAN - OpenTTD"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.160"
+        ipv4_address: "192.168.0.160"
     restart: unless-stopped
 
   trackmania-forever:
@@ -214,11 +214,39 @@ services:
       - SERVER_NAME=NoxLAN - TrackMania Nations
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.1.161"
+        ipv4_address: "192.168.0.161"
     restart: unless-stopped
+
+  scpsl:
+    image: scpsl:latest
+    container_name: gameserver-scpsl
+    environment:
+      - SERVER_PORT=7777
+    networks:
+      enp1s0f0_vlan:
+        ipv4_address: "192.168.0.162"
+    restart: unless-stopped
+
+  bf3vu:
+    image: bf3vu:latest
+    container_name: gameserver-bf3vu
+    env_file:
+      - bf3vu.env
+    environment:
+      - JOINHOST=192.168.0.163
+    networks:
+      enp1s0f0_vlan:
+        ipv4_address: "192.168.0.163"
+    restart: unless-stopped
+    volumes:
+      - /mnt/store/docker-volumes/vu/bf3:/vu/bf3
+      - /mnt/store/docker-volumes/vu/instance:/vu/instance
+      - bf3vu-client-volume:/vu/client
 
 networks:
   enp1s0f0_vlan:
     external:
       name: enp1s0f0_vlan
 
+volumes:
+  bf3vu-client-volume:
