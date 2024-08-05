@@ -5,17 +5,17 @@ services:
   l4d2-campaign:
     image: l4d2-metamod:latest
     container_name: gameserver-l4d2-campaign
+    env_file:
+      - rcon.env
     environment:
       - MAP="c2m1_highway"
       - MP_GAMEMODE="coop"
       - MAX_PLAYERS=4
-      - SV_HOSTNAME="NoxLAN - Left 4 Dead 2 - Campaign"
+      - HOSTNAME="NoxLAN - Left 4 Dead 2 - Campaign"
       - LAN=1
-      - RCON_PASSWORD="changeme"
-      - FULL_ADMINS="STEAM_1:0:7970889" "99:z"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.0.150"
+        ipv4_address: "192.168.0.120"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -23,53 +23,71 @@ services:
   l4d2-versus:
     image: l4d2-metamod:latest
     container_name: gameserver-l4d2-versus
+    env_file:
+      - rcon.env
     environment:
       - MAP="c2m1_highway"
       - MP_GAMEMODE="versus"
       - MAX_PLAYERS=8
-      - SV_HOSTNAME="NoxLAN - Left 4 Dead 2 - Versus"
+      - HOSTNAME="NoxLAN - Left 4 Dead 2 - Versus"
       - LAN=1
-      - RCON_PASSWORD="changeme"
-      - FULL_ADMINS="STEAM_1:0:7970889" "99:z"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.0.151"
+        ipv4_address: "192.168.0.121"
     stdin_open: true
     tty: true
     restart: unless-stopped
 
-  l4d2-versus-abm:
-    image: l4d2-abm:latest
-    container_name: gameserver-l4d2-versus-abm
+  l4d2-versus-ms:
+    image: l4d2-multislot:latest
+    container_name: gameserver-l4d2-versus-ms
+    env_file:
+      - rcon.env
     environment:
       - MAP="c2m1_highway"
       - MP_GAMEMODE="versus"
       - MAX_PLAYERS=16
-      - SV_HOSTNAME="NoxLAN - Left 4 Dead 2 - Versus (8v8)"
+      - HOSTNAME="NoxLAN - Left 4 Dead 2 - Versus (8v8)"
       - LAN=1
-      - RCON_PASSWORD="changeme"
-      - FULL_ADMINS="STEAM_1:0:7970889" "99:z"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.0.152"
+        ipv4_address: "192.168.0.132"
     stdin_open: true
     tty: true
     restart: unless-stopped
 
-  l4d2-campaign-abm:
-    image: l4d2-abm:latest
-    container_name: gameserver-l4d2-campaign-abm
+  l4d2-campaign-ms:
+    image: l4d2-multislot:latest
+    container_name: gameserver-l4d2-campaign-ms
+    env_file:
+      - rcon.env
     environment:
-      - MAP="c2m1_highway"
+      - MAP="c4m1_milltown_a"
       - MP_GAMEMODE="coop"
       - MAX_PLAYERS=8
-      - SV_HOSTNAME="NoxLAN - Left 4 Dead 2 - Campaign (8 players)"
+      - HOSTNAME="NoxLAN - Left 4 Dead 2 - Campaign (8 players)"
       - LAN=1
-      - RCON_PASSWORD="changeme"
-      - FULL_ADMINS="STEAM_1:0:7970889" "99:z"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.0.153"
+        ipv4_address: "192.168.0.133"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  l4d2-survival-ms:
+    image: l4d2-multislot:latest
+    container_name: gameserver-l4d2-survival-ms
+    env_file:
+      - rcon.env
+    environment:
+      - MAP="c6m1_riverbank"
+      - MP_GAMEMODE="survival"
+      - MAX_PLAYERS=8
+      - HOSTNAME="NoxLAN - Left 4 Dead 2 - Survival (8 players)"
+      - LAN=1
+    networks:
+      enp1s0f0_vlan:
+        ipv4_address: "192.168.0.134"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -77,6 +95,8 @@ services:
   css:
     image: css-metamod:latest
     container_name: gameserver-css
+    env_file:
+      - rcon.env
     environment:
       - BOT_QUOTA=12
       - MP_FRIENDLYFIRE=1
@@ -86,10 +106,9 @@ services:
       - MAX_PLAYERS=24
       - SV_HOSTNAME="NoxLAN - Counterstrike Source"
       - LAN=1
-      - RCON_PASSWORD="changeme"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.0.154"
+        ipv4_address: "192.168.0.140"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -97,15 +116,16 @@ services:
   css-hideandseek:
     image: css-hideandseek:latest
     container_name: gameserver-css-hideandseek
+    env_file:
+      - rcon.env
     environment:
       - MAP="cs_office"
       - MAX_PLAYERS=24
       - SV_HOSTNAME="NoxLAN - Counterstrike Source - (Hide and Seek)"
       - LAN=1
-      - RCON_PASSWORD="changeme"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.0.155"
+        ipv4_address: "192.168.0.141"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -113,33 +133,50 @@ services:
   css-gungame:
     image: css-gungame:latest
     container_name: gameserver-css-gungame
+    env_file:
+      - rcon.env
     environment:
       - MAP="de_dust2"
       - MAX_PLAYERS=24
       - SV_HOSTNAME="NoxLAN - Counterstrike Source - (GunGame)"
       - LAN=1
-      - RCON_PASSWORD="changeme"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.0.156"
+        ipv4_address: "192.168.0.142"
     stdin_open: true
     tty: true
     restart: unless-stopped
 
-  csgo:
-    image: csgo-metamod:latest
-    container_name: gameserver-csgo
-    environment:
-      - MAP="cs_office"
-      - MAX_PLAYERS=24
-      - SV_HOSTNAME="NoxLAN - Counterstrike Global Offensive"
-      - LAN=1
-    networks:
-      enp1s0f0_vlan:
-        ipv4_address: "192.168.0.154"
-    stdin_open: true
-    tty: true
-    restart: unless-stopped
+  # csgo:
+  #   image: cm2network/csgo:sourcemod
+  #   container_name: gameserver-csgo
+  #   environment:
+  #     - SRCDS_RCONPW="potentate"
+  #     - SRCDS_PW="potentate"
+  #     - SRCDS_PORT=27017
+  #     - SRCDS_TV_PORT=27020
+  #     - SRCDS_NET_PUBLIC_ADDRESS="0"
+  #     - SRCDS_IP=""
+  #     - SRCDS_FPSMAX=300
+  #     - SRCDS_TICKRATE=128
+  #     - SRCDS_MAXPLAYERS=20
+  #     - SRCDS_STARTMAP="cs_office"
+  #     - SRCDS_REGION=3
+  #     - SRCDS_MAPGROUP="mg_active"
+  #     - SRCDS_GAMETYPE=0
+  #     - SRCDS_GAMEMODE=1
+  #     - SRCDS_HOSTNAME="NoxLAN - Counterstrike Global Offensive"
+  #     - SRCDS_WORKSHOP_START_MAP=0
+  #     - SRCDS_HOST_WORKSHOP_COLLECTION=0
+  #     - ADDITIONAL_ARGS=""
+  #   networks:
+  #     enp1s0f0_vlan:
+  #       ipv4_address: "192.168.0.157"
+  #   stdin_open: true
+  #   tty: true
+  #   restart: unless-stopped
+  #   volumes:
+  #     - /mnt/store/docker-volumes/csgo/:/home/steam/csgo-dedicated/
 
   # csgo-gg:
   #   image: csgo-gg:latest
@@ -158,43 +195,56 @@ services:
 
   insurgency-pvp:
     image: insurgency:latest
-    container_name: gameserver-insurgency-pvp
+    container_name: gameserver-insurgency-survival
+    env_file:
+      - rcon.env
     environment:
-      - SV_HOSTNAME="NoxLAN - Insurgency - Conquest"
-      - MAPCYCLEFILE=mapcycle_tactical_operations.txt
-      - SERVER_CFG=default_server_battle.cfg
-#      - GAME_MODE=conquest
-      - RCON_PASSWORD="changeme"
+      - SV_HOSTNAME="NoxLAN - Insurgency - Survival"
+      - MAPCYCLEFILE=mapcycle_survival.txt
+      - SERVER_CFG=default_server_survival.cfg
+      - GAME_MODE=conquest
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.0.157"
+        ipv4_address: "192.168.0.150"
     restart: unless-stopped
 
   insurgency-coop:
     image: insurgency:latest
     container_name: gameserver-insurgency-coop
+    env_file:
+      - rcon.env
     environment:
       - SV_HOSTNAME="NoxLAN - Insurgency - Coop"
-#      - MAPCYCLEFILE="mapcycle_tactical_operations.txt"
-#      - SERVER_CFG="default_server_survival.cfg"
+      - MAPCYCLEFILE="mapcycle_cooperative.txt"
+      - SERVER_CFG="default_server_survival.cfg"
       - GAME_MODE=survival
-      - RCON_PASSWORD="changeme"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.0.158"
+        ipv4_address: "192.168.0.151"
     restart: unless-stopped
 
   tf2:
     image: tf2:latest
     container_name: gameserver-tf2
+    env_file:
+      - rcon.env
     environment:
       - MAP="cp_manor_event"
       - SV_HOSTNAME="NoxLAN - Team Fortress 2"
       - LAN=1
-      - RCON_PASSWORD="changeme"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.0.159"
+        ipv4_address: "192.168.0.160"
+    restart: unless-stopped
+
+  scpsl:
+    image: scpsl-exiled:latest
+    container_name: gameserver-scpsl
+    environment:
+      - SERVER_PORT=7777
+    networks:
+      enp1s0f0_vlan:
+        ipv4_address: "192.168.0.170"
     restart: unless-stopped
 
   openttd:
@@ -204,7 +254,7 @@ services:
       - SERVER_NAME="NoxLAN - OpenTTD"
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.0.160"
+        ipv4_address: "192.168.0.180"
     restart: unless-stopped
 
   trackmania-forever:
@@ -214,17 +264,7 @@ services:
       - SERVER_NAME=NoxLAN - TrackMania Nations
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.0.161"
-    restart: unless-stopped
-
-  scpsl:
-    image: scpsl:latest
-    container_name: gameserver-scpsl
-    environment:
-      - SERVER_PORT=7777
-    networks:
-      enp1s0f0_vlan:
-        ipv4_address: "192.168.0.162"
+        ipv4_address: "192.168.0.181"
     restart: unless-stopped
 
   bf3vu:
@@ -233,10 +273,10 @@ services:
     env_file:
       - bf3vu.env
     environment:
-      - JOINHOST=192.168.0.163
+      - JOINHOST=192.168.0.182
     networks:
       enp1s0f0_vlan:
-        ipv4_address: "192.168.0.163"
+        ipv4_address: "192.168.0.182"
     restart: unless-stopped
     volumes:
       - /mnt/store/docker-volumes/vu/bf3:/vu/bf3
