@@ -14,8 +14,8 @@ services:
       - HOSTNAME="NoxLAN - Left 4 Dead 2 - Campaign"
       - LAN=1
     networks:
-      enp1s0f0_vlan:
-        ipv4_address: "192.168.0.120"
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.10"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -32,8 +32,8 @@ services:
       - HOSTNAME="NoxLAN - Left 4 Dead 2 - Versus"
       - LAN=1
     networks:
-      enp1s0f0_vlan:
-        ipv4_address: "192.168.0.121"
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.11"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -50,8 +50,8 @@ services:
       - HOSTNAME="NoxLAN - Left 4 Dead 2 - Versus (8v8)"
       - LAN=1
     networks:
-      enp1s0f0_vlan:
-        ipv4_address: "192.168.0.132"
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.12"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -68,8 +68,8 @@ services:
       - HOSTNAME="NoxLAN - Left 4 Dead 2 - Campaign (8 players)"
       - LAN=1
     networks:
-      enp1s0f0_vlan:
-        ipv4_address: "192.168.0.133"
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.13"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -86,10 +86,29 @@ services:
       - HOSTNAME="NoxLAN - Left 4 Dead 2 - Survival (8 players)"
       - LAN=1
     networks:
-      enp1s0f0_vlan:
-        ipv4_address: "192.168.0.134"
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.14"
     stdin_open: true
     tty: true
+    restart: unless-stopped
+
+  cs-1-6:
+    image: cs16ds/server:latest
+    container_name: gameserver-cs-1-6
+    ports:
+      - 26900:26900/udp
+      - 27020:27020/udp
+      - 27015:27015/udp
+      - 27015:27015
+    environment:
+      - MAXPLAYERS=32
+      - START_MAP="de_dust"
+      - SERVER_NAME="NoxLAN - Counterstrike"
+      - FRIENDLY_FIRE=1
+      - LAN=1
+    networks:
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.20"
     restart: unless-stopped
 
   css:
@@ -99,16 +118,17 @@ services:
       - rcon.env
     environment:
       - BOT_QUOTA=12
+      - MP_AUTOTEAMBALANCE=1
       - MP_FRIENDLYFIRE=1
       - MP_MAXROUNDS=7
-      - MP_AUTOTEAMBALANCE=1
+      - MP_TIMELIMIT=10
       - MAP="de_dust"
       - MAX_PLAYERS=24
       - SV_HOSTNAME="NoxLAN - Counterstrike Source"
       - LAN=1
     networks:
-      enp1s0f0_vlan:
-        ipv4_address: "192.168.0.140"
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.30"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -121,11 +141,12 @@ services:
     environment:
       - MAP="cs_office"
       - MAX_PLAYERS=24
+      - MP_TIMELIMIT=10
       - SV_HOSTNAME="NoxLAN - Counterstrike Source - (Hide and Seek)"
       - LAN=1
     networks:
-      enp1s0f0_vlan:
-        ipv4_address: "192.168.0.141"
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.31"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -136,13 +157,15 @@ services:
     env_file:
       - rcon.env
     environment:
-      - MAP="de_dust2"
+      - BOT_QUOTA=4
+      - MAP="cs_office"
       - MAX_PLAYERS=24
+      - MP_TIMELIMIT=30
       - SV_HOSTNAME="NoxLAN - Counterstrike Source - (GunGame)"
       - LAN=1
     networks:
-      enp1s0f0_vlan:
-        ipv4_address: "192.168.0.142"
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.32"
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -170,8 +193,8 @@ services:
   #     - SRCDS_HOST_WORKSHOP_COLLECTION=0
   #     - ADDITIONAL_ARGS=""
   #   networks:
-  #     enp1s0f0_vlan:
-  #       ipv4_address: "192.168.0.157"
+  #     enp1s0f1_vlan:
+  #       ipv4_address: "192.168.100.40"
   #   stdin_open: true
   #   tty: true
   #   restart: unless-stopped
@@ -187,11 +210,49 @@ services:
   #     - SV_HOSTNAME="NoxLAN - Counterstrike Global Offensive - Gun Game"
   #     - LAN=1
   #   networks:
-  #     enp1s0f0_vlan:
-  #       ipv4_address: "192.168.0.155"
+  #     enp1s0f1_vlan:
+  #       ipv4_address: "192.168.100.41"
   #   stdin_open: true
   #   tty: true
   #   restart: unless-stopped
+
+  # tf2:
+  #   image: ghcr.io/melkortf/tf2-sourcemod:latest
+  #   container_name: gameserver-tf2
+  #   env_file:
+  #     - rcon.env
+  #   environment:
+  #     - MAP="cp_manor_event"
+  #     - SERVER_HOSTNAME=NoxLAN - Team Fortress 2
+  #     - LAN=1
+  #   networks:
+  #     enp1s0f1_vlan:
+  #       ipv4_address: "192.168.100.50"
+  #   restart: unless-stopped
+
+  # tf2-mvm:
+  #   image: tf2-melkort-mvm:latest
+  #   container_name: gameserver-tf2-mvm
+  #   env_file:
+  #     - rcon.env
+  #   environment:
+  #     - MAP="mvm_coaltown"
+  #     - SERVER_HOSTNAME=NoxLAN - MVM Team Fortress 2
+  #     - LAN=1
+  #   networks:
+  #     enp1s0f1_vlan:
+  #       ipv4_address: "192.168.100.51"
+  #   restart: unless-stopped
+
+  scpsl:
+    image: scpsl-exiled:latest
+    container_name: gameserver-scpsl
+    environment:
+      - SERVER_PORT=7777
+    networks:
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.60"
+    restart: unless-stopped
 
   insurgency-pvp:
     image: insurgency:latest
@@ -204,8 +265,8 @@ services:
       - SERVER_CFG=default_server_survival.cfg
       - GAME_MODE=conquest
     networks:
-      enp1s0f0_vlan:
-        ipv4_address: "192.168.0.150"
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.70"
     restart: unless-stopped
 
   insurgency-coop:
@@ -219,74 +280,48 @@ services:
       - SERVER_CFG="default_server_survival.cfg"
       - GAME_MODE=survival
     networks:
-      enp1s0f0_vlan:
-        ipv4_address: "192.168.0.151"
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.71"
     restart: unless-stopped
 
-  tf2:
-    image: tf2:latest
-    container_name: gameserver-tf2
-    env_file:
-      - rcon.env
-    environment:
-      - MAP="cp_manor_event"
-      - SV_HOSTNAME="NoxLAN - Team Fortress 2"
-      - LAN=1
-    networks:
-      enp1s0f0_vlan:
-        ipv4_address: "192.168.0.160"
-    restart: unless-stopped
+  # openttd:
+  #   image: openttd:latest
+  #   container_name: gameserver-openttd
+  #   environment:
+  #     - SERVER_NAME="NoxLAN - OpenTTD"
+  #   networks:
+  #     enp1s0f1_vlan:
+  #       ipv4_address: "192.168.100.80"
+  #   restart: unless-stopped
 
-  scpsl:
-    image: scpsl-exiled:latest
-    container_name: gameserver-scpsl
-    environment:
-      - SERVER_PORT=7777
-    networks:
-      enp1s0f0_vlan:
-        ipv4_address: "192.168.0.170"
-    restart: unless-stopped
+  # trackmania-forever:
+  #   image: trackmania-forever:latest
+  #   container_name: gameserver-trackmania
+  #   environment:
+  #     - SERVER_NAME=NoxLAN - TrackMania Nations
+  #   networks:
+  #     enp1s0f1_vlan:
+  #       ipv4_address: "192.168.100.81"
+  #   restart: unless-stopped
 
-  openttd:
-    image: openttd:latest
-    container_name: gameserver-openttd
+  ftp:
+    image: delfer/alpine-ftp-server:latest
     environment:
-      - SERVER_NAME="NoxLAN - OpenTTD"
-    networks:
-      enp1s0f0_vlan:
-        ipv4_address: "192.168.0.180"
+      USERS: 'anonymous|password guest|guest'
+      ADDRESS: 192.168.100.2
     restart: unless-stopped
-
-  trackmania-forever:
-    image: trackmania-forever:latest
-    container_name: gameserver-trackmania
-    environment:
-      - SERVER_NAME=NoxLAN - TrackMania Nations
-    networks:
-      enp1s0f0_vlan:
-        ipv4_address: "192.168.0.181"
-    restart: unless-stopped
-
-  bf3vu:
-    image: bf3vu:latest
-    container_name: gameserver-bf3vu
-    env_file:
-      - bf3vu.env
-    environment:
-      - JOINHOST=192.168.0.182
-    networks:
-      enp1s0f0_vlan:
-        ipv4_address: "192.168.0.182"
-    restart: unless-stopped
+    ports:
+      - "192.168.100.2:21:21/tcp"
+      - "192.168.100.2:21000-21010:21000-21010"
     volumes:
-      - /mnt/store/docker-volumes/vu/bf3:/vu/bf3
-      - /mnt/store/docker-volumes/vu/instance:/vu/instance
-      - bf3vu-client-volume:/vu/client
+      - /ftp
 
 networks:
-  enp1s0f0_vlan:
-    external:
-      name: enp1s0f0_vlan
-
-volumes:
-  bf3vu-client-volume:
+  enp1s0f1_vlan:
+    name: enp1s0f1_vlan
+    driver: macvlan
+    driver_opts:
+      parent: enp1s0f1
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24
