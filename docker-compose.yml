@@ -302,19 +302,6 @@ services:
   #       ipv4_address: "192.168.100.81"
   #   restart: unless-stopped
 
-#  ftp:
-#    image: delfer/alpine-ftp-server:latest
-#    container_name: gameserver-ftp
-#    environment:
-#      USERS: 'guest|guest'
-#      ADDRESS: 192.168.100.2
-#    restart: unless-stopped
-#    ports:
-#      - "192.168.100.2:21:21/tcp"
-#      - "192.168.100.2:21000-21010:21000-21010"
-#    volumes:
-#      - /srv/store/docker-volumes/ftp/data/ftpusers/shared:/ftp
-
   ftp:
     image: noxtech/anonymous-pure-ftp
     container_name: gameserver-ftp
@@ -325,7 +312,8 @@ services:
       - "40000-40039:40000-40039"
     restart: unless-stopped
     volumes:
-      - "/srv/store/docker-volumes/ftp/data/anonymous/shared:/data/anonymous/shared"
+      - "/srv/store/docker-volumes/ftp/data:/data"
+      - "/srv/store/docker-volumes/ftp/etc/pure-ftpd/:/etc/pure-ftpd/"
 
   ptokax:
     image: ruben69695/ptokax:latest
