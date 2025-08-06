@@ -90,6 +90,8 @@ services:
     tty: true
     restart: unless-stopped
 
+#todo add bot support with
+#https://web.archive.org/web/20240321092155/http://filebase.bots-united.com/uploads/podbot_full_V3B22.zip
   cs-1-6:
     image: cs16ds/server:latest
     container_name: gameserver-cs-1-6
@@ -107,6 +109,22 @@ services:
     networks:
       enp1s0f1_vlan:
         ipv4_address: "192.168.100.20"
+    restart: unless-stopped
+
+  gameserver-blackmesa:
+    image: blackmesa:latest
+    container_name: gameserver-blackmesa
+    environment:
+      - MAXPLAYERS=24
+      - START_MAP="bm_c0a0a"
+      - SERVER_NAME="NoxLAN - Black Mesa"
+      - FRIENDLY_FIRE=1
+      - LAN=1
+    networks:
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.22"
+    stdin_open: true
+    tty: true
     restart: unless-stopped
 
   css:
@@ -155,10 +173,11 @@ services:
     env_file:
       - rcon.env
     environment:
-      - BOT_QUOTA=4
-      - MAP="cs_office"
+      - BOT_QUOTA=12
+      - MAP="de_chateau"
       - MAX_PLAYERS=24
-      - MP_TIMELIMIT=30
+      - MP_TIMELIMIT=15
+      - MP_ROUNDTIME=0
       - SV_HOSTNAME="NoxLAN - Counterstrike Source - (GunGame)"
       - LAN=1
     networks:
@@ -280,6 +299,43 @@ services:
     networks:
       enp1s0f1_vlan:
         ipv4_address: "192.168.100.71"
+    restart: unless-stopped
+
+  ut99-base: &ut99-base
+    image: roemer/ut99-server:latest
+    environment:
+      - UT_WEBADMINUSER="admin"
+      - UT_INITIALBOTS_DM=4
+      - UT_MINPLAYERS_DM=4
+      - UT_WEBADMINPWD="admin"
+      - UT_MINPLAYERS_CTF=8
+      - UT_MOTD1="Have Fun!"
+      - UT_MAXPLAYERS=32
+      - UT_ADMINEMAIL="admin@noxlan.co.uk"
+      - UT_INITIALBOTS_CTF=8
+      - UT_ADMINNAME="UTAdmin"
+      - UT_ADMINPWD="admin"
+
+  ut99:
+    !!merge <<: *ut99-base
+    container_name: gameserver-ut99
+    environment:
+      - UT_SERVERURL="CTF-Face?game=BotPack.CTFGame?mutator=MVES.MapVote,FlagAnnouncementsV2.FlagAnnouncements"
+      - UT_SERVERNAME="NoxLAN UT99 Server"
+    networks:
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.74"
+    restart: unless-stopped
+
+  ut99-instagib:
+    !!merge <<: *ut99-base
+    container_name: gameserver-ut99-instagib
+    environment:
+      - UT_SERVERURL="CTF-Face?game=BotPack.CTFGame?mutator=otPack.InstaGibDM,MVES.MapVote,FlagAnnouncementsV2.FlagAnnouncements"
+      - UT_SERVERNAME="NoxLAN UT99 Server - Instagib"
+    networks:
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.75"
     restart: unless-stopped
 
   # openttd:
