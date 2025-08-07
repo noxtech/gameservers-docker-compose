@@ -389,25 +389,35 @@ services:
     tty: true
     restart: unless-stopped
 
-  # openttd:
-  #   image: openttd:latest
-  #   container_name: gameserver-openttd
-  #   environment:
-  #     - SERVER_NAME="NoxLAN - OpenTTD"
-  #   networks:
-  #     enp1s0f1_vlan:
-  #       ipv4_address: "192.168.100.80"
-  #   restart: unless-stopped
+#  openttd:
+#    image: openttd:latest
+#    container_name: gameserver-openttd
+#    environment:
+#      - SERVER_NAME="NoxLAN - OpenTTD"
+#    networks:
+#      enp1s0f1_vlan:
+#        ipv4_address: "192.168.100.80"
+#    restart: unless-stopped
 
-  # trackmania-forever:
-  #   image: trackmania-forever:latest
-  #   container_name: gameserver-trackmania
-  #   environment:
-  #     - SERVER_NAME=NoxLAN - TrackMania Nations
-  #   networks:
-  #     enp1s0f1_vlan:
-  #       ipv4_address: "192.168.100.81"
-  #   restart: unless-stopped
+  trackmania-forever:
+    image: trackmania-forever:latest
+    container_name: gameserver-trackmania
+    environment:
+      - SERVER_NAME=NoxLAN - TrackMania Nations
+    networks:
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.82"
+    restart: unless-stopped
+
+  intranet:
+    image: nginx:latest
+    volumes:
+      - ./intranet:/usr/share/nginx/html:ro
+#      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.5"
+    restart: unless-stopped
 
   ftp:
     image: noxtech/anonymous-pure-ftp

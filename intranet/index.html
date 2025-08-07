@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NoxLAN Game Server List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 2rem;
+      background: #111;
+      color: #eee;
+    }
+    h1 {
+      color: #8ef;
+    }
+    h2 {
+      color: #7f7;
+    }
+    .server-group {
+      margin-bottom: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+    }
+    th, td {
+      border: 1px solid #444;
+      padding: 0.5rem;
+      text-align: left;
+    }
+    th {
+      background-color: #222;
+    }
+    a {
+      color: #0af;
+    }
+    .notice {
+      background: #222;
+      padding: 1rem;
+      border-left: 4px solid #f90;
+      margin-bottom: 2rem;
+    }
+    code {
+      background: #222;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <h1>NoxLAN Game Servers</h1>
+  <p>All servers are on the <strong>192.168.100.x</strong> LAN network. Join from a PC connected to the same LAN.</p>
+
+  <div class="notice">
+    <h2>🧠 How to Join Games</h2>
+    <ul>
+      <li><strong>Left 4 Dead 2:</strong> Open the in-game console (enable it in settings), then type <code>openserverbrowser</code> to view LAN servers.</li>
+      <li><strong>Unreal Tournament 99 / 2004, Insurgency, Counter-Strike (1.6 & Source):</strong> These should automatically appear in the in-game LAN browser.</li>
+      <li><strong>Not seeing any LAN servers?</strong> This might be due to incorrect network adapter priority. If you have a VPN or virtual adapter, it may block discovery.</li>
+    </ul>
+    <p><strong>Fix:</strong></p>
+    <ol>
+      <li>Go to <em>Control Panel → Network & Internet → Network Connections</em></li>
+      <li>Right-click your LAN adapter → Properties → Internet Protocol Version 4 (TCP/IPv4) → Properties → Advanced</li>
+      <li>Uncheck <strong>Automatic metric</strong> and enter <code>1</code> in the Interface metric box</li>
+      <li>Alternatively, disable all other non-LAN adapters (VPN, virtual, etc.)</li>
+    </ol>
+  </div>
+
+  <div class="server-group">
+    <h2>🎮 Left 4 Dead 2</h2>
+    <table>
+      <tr><th>Server</th><th>IP</th><th>Mode</th><th>Max Players</th></tr>
+      <tr><td>Campaign</td><td>192.168.100.10</td><td>Coop</td><td>4</td></tr>
+      <tr><td>Versus</td><td>192.168.100.11</td><td>Versus</td><td>8</td></tr>
+      <tr><td>Versus (8v8)</td><td>192.168.100.12</td><td>Versus</td><td>16</td></tr>
+      <tr><td>Campaign (8 players)</td><td>192.168.100.13</td><td>Coop</td><td>8</td></tr>
+      <tr><td>Survival (8 players)</td><td>192.168.100.14</td><td>Survival</td><td>8</td></tr>
+    </table>
+  </div>
+
+  <div class="server-group">
+    <h2>🔫 Counter-Strike 1.6</h2>
+    <p>Connect via console: <code>connect 192.168.100.20</code></p>
+  </div>
+
+  <div class="server-group">
+    <h2>🔫 Counter-Strike: Source</h2>
+    <table>
+      <tr><th>Server</th><th>IP</th><th>Game Mode</th></tr>
+      <tr><td>Classic</td><td>192.168.100.30</td><td>Standard</td></tr>
+      <tr><td>Hide and Seek</td><td>192.168.100.31</td><td>HNS</td></tr>
+      <tr><td>GunGame</td><td>192.168.100.32</td><td>GG</td></tr>
+    </table>
+  </div>
+
+  <div class="server-group">
+    <h2>🧟‍♂️ SCP: Secret Laboratory</h2>
+    <p>Connect to: <code>192.168.100.60:7777</code></p>
+  </div>
+
+  <div class="server-group">
+    <h2>🔥 Insurgency</h2>
+    <table>
+      <tr><th>Server</th><th>IP</th><th>Mode</th></tr>
+      <tr><td>Survival</td><td>192.168.100.70</td><td>PvP</td></tr>
+      <tr><td>Coop</td><td>192.168.100.71</td><td>Coop</td></tr>
+    </table>
+  </div>
+
+  <div class="server-group">
+    <h2>💥 Unreal Tournament 99</h2>
+    <table>
+      <tr><th>Server</th><th>IP</th><th>Mode</th></tr>
+      <tr><td>Standard</td><td>192.168.100.74</td><td>CTF</td></tr>
+      <tr><td>Instagib</td><td>192.168.100.75</td><td>CTF Instagib</td></tr>
+    </table>
+    <p>Join using the in-game LAN browser.</p>
+  </div>
+
+  <div class="server-group">
+    <h2>💥 Unreal Tournament 2004</h2>
+    <table>
+      <tr><th>Server</th><th>IP</th><th>Mode</th></tr>
+      <tr><td>Standard</td><td>192.168.100.76</td><td>CTF / DM / AS / DOM / ONS</td></tr>
+      <tr><td>Instagib</td><td>192.168.100.77</td><td>Instagib</td></tr>
+    </table>
+    <p>Join using the in-game LAN browser.</p>
+  </div>
+
+  <div class="server-group">
+    <h2>🚂 OpenTTD</h2>
+    <p>Join via OpenTTD's LAN browser: <strong>192.168.100.80</strong></p>
+  </div>
+
+  <div class="server-group">
+    <h2>🏁 TrackMania Nations Forever</h2>
+    <p>Connect via game server browser: <strong>192.168.100.82</strong></p>
+  </div>
+
+  <div class="server-group">
+    <h2>📦 FTP Server (File Downloads)</h2>
+    <p>Anonymous FTP server for downloading game files:</p>
+    <p><code>ftp://192.168.100.2</code></p>
+    <p>Username: <strong>anonymous</strong> | No password required</p>
+  </div>
+
+  <div class="server-group">
+    <h2>🔗 PtokaX Direct Connect Hub</h2>
+    <p>Connect using your DC++ client to: <strong>192.168.100.2:1412</strong></p>
+  </div>
+
+  <footer>
+    <hr>
+    <p>Powered by Docker Compose | NoxLAN Game Servers</p>
+  </footer>
+</body>
+</html>
