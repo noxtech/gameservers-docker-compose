@@ -1,3 +1,29 @@
+# base services
+x-ut99-base: &ut99-base
+  image: roemer/ut99-server:latest
+  environment:
+    - UT_WEBADMINUSER="admin"
+    - UT_INITIALBOTS_DM=4
+    - UT_MINPLAYERS_DM=4
+    - UT_WEBADMINPWD="admin"
+    - UT_MINPLAYERS_CTF=8
+    - UT_MOTD1="Have Fun!"
+    - UT_MAXPLAYERS=32
+    - UT_ADMINEMAIL="admin@noxlan.co.uk"
+    - UT_INITIALBOTS_CTF=8
+    - UT_ADMINNAME="UTAdmin"
+    - UT_ADMINPWD="admin"
+
+x-ut2004-base: &ut2004-base
+  image: ut2004:latest
+  environment:
+    - MAXPLAYERS="64"
+    - MUTATORS=""              # Optional mutators (used only if INSTAGIB not set)
+    - OTHER_OPTS=""            # Additional ?option=value options
+    - LAN="1"                  # Set to 1 to disable online uplink
+    - SV_PASSWORD=""           # Optional server join password
+    - RCON_PASSWORD="noxlan"   # Admin password
+
 services:
 
   l4d2-campaign:
@@ -269,6 +295,8 @@ services:
     networks:
       enp1s0f1_vlan:
         ipv4_address: "192.168.100.60"
+    stdin_open: true
+    tty: true
     restart: unless-stopped
 
   insurgency-pvp:
@@ -284,6 +312,8 @@ services:
     networks:
       enp1s0f1_vlan:
         ipv4_address: "192.168.100.70"
+    stdin_open: true
+    tty: true
     restart: unless-stopped
 
   insurgency-coop:
@@ -299,22 +329,9 @@ services:
     networks:
       enp1s0f1_vlan:
         ipv4_address: "192.168.100.71"
+    stdin_open: true
+    tty: true
     restart: unless-stopped
-
-  ut99-base: &ut99-base
-    image: roemer/ut99-server:latest
-    environment:
-      - UT_WEBADMINUSER="admin"
-      - UT_INITIALBOTS_DM=4
-      - UT_MINPLAYERS_DM=4
-      - UT_WEBADMINPWD="admin"
-      - UT_MINPLAYERS_CTF=8
-      - UT_MOTD1="Have Fun!"
-      - UT_MAXPLAYERS=32
-      - UT_ADMINEMAIL="admin@noxlan.co.uk"
-      - UT_INITIALBOTS_CTF=8
-      - UT_ADMINNAME="UTAdmin"
-      - UT_ADMINPWD="admin"
 
   ut99:
     !!merge <<: *ut99-base
@@ -325,6 +342,8 @@ services:
     networks:
       enp1s0f1_vlan:
         ipv4_address: "192.168.100.74"
+    stdin_open: true
+    tty: true
     restart: unless-stopped
 
   ut99-instagib:
@@ -336,6 +355,38 @@ services:
     networks:
       enp1s0f1_vlan:
         ipv4_address: "192.168.100.75"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  ut2004:
+    !!merge <<: *ut2004-base
+    container_name: gameserver-ut2004
+    environment:
+      - SV_HOSTNAME="NoxLAN UT2004 Server"
+      - MAP="CTF-Face3"
+      - MAPVOTE_TYPE="DM,CTF,AS,DOM,ONS"
+      - INSTAGIB="0"             # Set to 1 for InstaGib
+    networks:
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.76"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  ut2004-instagib:
+    !!merge <<: *ut2004-base
+    container_name: gameserver-ut2004-instagib
+    environment:
+      - SV_HOSTNAME="NoxLAN UT2004 Server - Instagib"
+      - MAP="CTF-Face3"
+      - MAPVOTE_TYPE="DM,CTF,AS,DOM,ONS"
+      - INSTAGIB="1"             # Set to 1 for InstaGib
+    networks:
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.77"
+    stdin_open: true
+    tty: true
     restart: unless-stopped
 
   # openttd:
@@ -366,15 +417,14 @@ services:
     ports:
       - "21:21"
       - "40000-40039:40000-40039"
-    restart: unless-stopped
     volumes:
       - "/srv/store/docker-volumes/ftp/data:/data"
       - "/srv/store/docker-volumes/ftp/etc/pure-ftpd/:/etc/pure-ftpd/"
+    restart: unless-stopped
 
   ptokax:
     image: ruben69695/ptokax:latest
     container_name: gameserver-ptokax
-    restart: unless-stopped
     ports:
       - "192.168.100.2:1412:1412"
       - "192.168.100.2:411:411/tcp"
@@ -385,6 +435,7 @@ services:
       - /srv/store/docker-volumes/ptokax/config:/src/cfg-custom
       - /srv/store/docker-volumes/ptokax/logs:/src/logs
     entrypoint: /bin/sh -c "mkdir -p /src/cfg/ && cp -r /src/cfg-custom/* /src/cfg/ && exec ./PtokaX"
+    restart: unless-stopped
 
 #  airdcpp:
 #    image: gangefors/airdcpp-webclient
