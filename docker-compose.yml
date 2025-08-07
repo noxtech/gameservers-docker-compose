@@ -389,15 +389,15 @@ services:
     tty: true
     restart: unless-stopped
 
-#  openttd:
-#    image: openttd:latest
-#    container_name: gameserver-openttd
-#    environment:
-#      - SERVER_NAME="NoxLAN - OpenTTD"
-#    networks:
-#      enp1s0f1_vlan:
-#        ipv4_address: "192.168.100.80"
-#    restart: unless-stopped
+  openttd:
+    image: openttd:latest
+    container_name: gameserver-openttd
+    environment:
+      - SERVER_NAME="NoxLAN - OpenTTD"
+    networks:
+      enp1s0f1_vlan:
+        ipv4_address: "192.168.100.80"
+    restart: unless-stopped
 
   trackmania-forever:
     image: trackmania-forever:latest
