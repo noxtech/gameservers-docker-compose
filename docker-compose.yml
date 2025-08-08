@@ -306,6 +306,7 @@ services:
       - rcon.env
     environment:
       - SV_HOSTNAME="NoxLAN - Insurgency - Survival"
+      - MAXPLAYERS=24
       - MAPCYCLEFILE=mapcycle_survival.txt
       - SERVER_CFG=default_server_survival.cfg
       - GAME_MODE=conquest
@@ -323,8 +324,9 @@ services:
       - rcon.env
     environment:
       - SV_HOSTNAME="NoxLAN - Insurgency - Coop"
-      - MAPCYCLEFILE="mapcycle_cooperative.txt"
-      - SERVER_CFG="default_server_survival.cfg"
+      - MAXPLAYERS=24
+      - MAPCYCLEFILE=mapcycle_cooperative.txt
+      - SERVER_CFG=default_server_survival.cfg
       - GAME_MODE=survival
     networks:
       enp1s0f1_vlan:
