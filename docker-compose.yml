@@ -350,7 +350,7 @@ services:
     !!merge <<: *ut99-base
     container_name: gameserver-ut99-instagib
     environment:
-      - UT_SERVERURL="CTF-Face?game=BotPack.CTFGame?mutator=otPack.InstaGibDM,MVES.MapVote,FlagAnnouncementsV2.FlagAnnouncements"
+      - UT_SERVERURL="CTF-Face?game=BotPack.CTFGame?mutator=BotPack.InstaGibDM,MVES.MapVote,FlagAnnouncementsV2.FlagAnnouncements"
       - UT_SERVERNAME="NoxLAN UT99 Server - Instagib"
     networks:
       enp1s0f1_vlan:
@@ -364,7 +364,7 @@ services:
     container_name: gameserver-ut2004
     environment:
       - SV_HOSTNAME="NoxLAN UT2004 Server"
-      - MAP="CTF-Face3"
+      - MAP=CTF-Face3
       - MAPVOTE_TYPE="DM,CTF,AS,DOM,ONS"
       - INSTAGIB="0"             # Set to 1 for InstaGib
     networks:
@@ -379,7 +379,7 @@ services:
     container_name: gameserver-ut2004-instagib
     environment:
       - SV_HOSTNAME="NoxLAN UT2004 Server - Instagib"
-      - MAP="CTF-Face3"
+      - MAP=CTF-Face3
       - MAPVOTE_TYPE="DM,CTF,AS,DOM,ONS"
       - INSTAGIB="1"             # Set to 1 for InstaGib
     networks:
